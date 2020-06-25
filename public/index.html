@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat da Rcoketseat</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.dev.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body class="justify-content-center">
+    <div class="container-fluid">
+
+        <hr>
+      
+        <div class="row justify-content-center">
+            <form id="chat" class="text-center">
+                <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Digite seu usuario"></input>
+                <div class="messages"></div>
+                <input type="text" name="message" class="form-control" placeholder="Digite sua mensagem"></input>
+                <button type="submit" class="form-control btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    var socket = io('http://localhost:3000');
+
+    function renderMessage(message){
+        $('.messages').append('<div class="message"><strong>'+message.author+'</strong>: '+message.message+'</div>')
+    };
+
+    socket.on('previousMessages', function(messages){
+        for (message of messages){
+            renderMessage(message);
+        }
+    });
+
+    socket.on('receivedMessage', function(messages){
+        renderMessage(messages);
+    }); 
+
+        $('#chat').submit(function(event){
+            event.preventDefault();
+
+            var author = $('input[name=username]').val();
+            var message = $('input[name=message]').val();
+
+            if (author.length && message.length) {
+                var messageObject = {
+                    message: message,
+                    author: author,
+                };
+
+                renderMessage(messageObject);
+                socket.emit('sendMessage' , messageObject);
+            }
+        });
+    </script>
+</body>
+</html>
