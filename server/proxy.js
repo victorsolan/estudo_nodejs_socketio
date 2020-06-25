@@ -14,9 +14,9 @@ app.use(express.static(path.join(__dirname,"../"+config.Proxy.settings.storage_p
 app.engine('html' , require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.use('/', (req,res)=> {
-    res.sendFile(path.join(storage+'/index.html'));
-});
+// app.use('/', (req,res)=> {
+//     res.sendFile(path.join(storage+'/index.html'));
+// });
 
 app.get('/stream', function (req, res) {
     res.sendFile(path.join(storage+'/stream.html'));

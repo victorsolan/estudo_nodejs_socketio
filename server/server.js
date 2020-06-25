@@ -35,14 +35,14 @@ const io = require('socket.io')(config.Server.settings.socket, {
 let messages = [];
 
 io.on('connection', socket => {
-    console.log(`Socket Conectado: ${socket.id}`);
+    // console.log(`Socket Conectado: ${socket.id}`);
 
-    socket.emit('previousMessages',messages);
+    // socket.emit('previousMessages',messages);
 
-    socket.on('sendMessage', data => {
-        messages.push(data);
-        socket.broadcast.emit('receivedMessage', data)
-    });
+    // socket.on('sendMessage', data => {
+    //     messages.push(data);
+    //     socket.broadcast.emit('receivedMessage', data)
+    // });
 
     socket.on('stream',function(data){
         socket.broadcast.emit('stream',data);
