@@ -1,14 +1,14 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const Proxy = require('http-proxy').createProxyServer();
-const config = require(path.join(__dirname,"../config/global.json"));
-const port = config.Server.settings.port;
+const port = process.env.SERVER_PORT;
 const app = express();
 
-const ProxyServer= 'http://localhost:'+ config.Proxy.settings.port;
+const ProxyServer= 'http://localhost:'+ process.env.PROXY_PORT;
 
 
-const io = require('socket.io')(config.Server.settings.socket, {
+const io = require('socket.io')(process.env.SERVER_SOCKET, {
     handlePreflightRequest: (req, res) => {
         const headers = {
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -68,6 +68,6 @@ app.listen(port, () => console.log(`\x1b[40m`,`\x1b[32m`,
  
     [+] Maintance      : https://github.com/eminmuhammadi/emiga-stream.git
     [+] Server         : http://localhost:${port}
-    [+] Socket         : ws://localhost:${config.Server.settings.port}
+    [+] Socket         : ws://localhost:${process.env.SERVER_SOCKET}
     [~] Running Server...
 `,`\x1b[0m`));

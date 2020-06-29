@@ -1,14 +1,12 @@
 const express    = require('express');
 const path       = require('path');
-const config     = require(path.join(__dirname,"../config/global.json"));
-const storage    = path.join(__dirname,"../"+config.Proxy.settings.storage_path);
-const port       = config.Proxy.settings.port;
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const storage    = path.join(__dirname,"../"+process.env.PROXY_STORAGE_PATH);
+const port       = process.env.PROXY_PORT;
 const app        = express();
 
-/**
- *   Storage
- */
-app.use(express.static(path.join(__dirname,"../"+config.Proxy.settings.storage_path)));
+
+app.use(express.static(path.join(__dirname,"../"+storage)));
 
 
 app.engine('html' , require('ejs').renderFile);

@@ -18,7 +18,11 @@
 
         <script type="text/javascript">
     
+            // var socket = io('ws://192.168.0.20:8001');
+            // ^^ para ver pelo cel
+
             var socket = io('ws://localhost:8001');
+            // ^^ para ver em localhost
             
             socket.on('stream',function(image){
                 $('#play').attr('src',image);

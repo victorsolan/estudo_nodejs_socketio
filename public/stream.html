@@ -16,7 +16,7 @@
         <!-- <div id="log"></div> -->
 
         <script type="text/javascript">
-        var socket = io('http://localhost:8001');
+            
             var canvas = document.getElementById("preview");
             var context = canvas.getContext('2d');
         
@@ -27,8 +27,12 @@
             context.height = canvas.height;
         
             var video = document.getElementById("video");
-        
+    
+            // var socket = io('ws://192.168.0.20:8001');
+            // ^^ para ver pelo cel
+
             var socket = io('ws://localhost:8001');
+            // ^^ para ver em localhost
         
             // function logger(msg){
             //     $('#log').text(msg);
@@ -67,7 +71,7 @@
         
                 setInterval(function(){
                     Draw(video,context);
-                },0.05);
+                },0.1);
             });
         
         </script>
