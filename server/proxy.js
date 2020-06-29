@@ -6,7 +6,7 @@ const port       = process.env.PROXY_PORT;
 const app        = express();
 
 
-app.use(express.static(path.join(__dirname,"../"+storage)));
+app.use(express.static(storage));
 
 
 app.engine('html' , require('ejs').renderFile);
